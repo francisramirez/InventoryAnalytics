@@ -1,7 +1,4 @@
 ﻿
-
-
-
 namespace InventoryAnalytics.Application.Repositories
 {
     using InventoryAnalytics.Domain.Repository;
@@ -10,4 +7,5 @@ namespace InventoryAnalytics.Application.Repositories
     {
         
     }
+   
 }

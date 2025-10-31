@@ -23,6 +23,7 @@ namespace InventoryAnalytics.Persistence.Repositories.Csv
         {
             _configuration = configuration;
             _logger = logger;
+            _pathFile = _configuration["InventoryCsvFilePath"];
         }
         public async Task<IEnumerable<InventarioDiario>> ReadFileAsync(string filePath)
         {

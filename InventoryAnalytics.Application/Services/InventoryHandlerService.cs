@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 namespace InventoryAnalytics.Application.Services
 {
     using InventoryAnalytics.Application.Interfaces;

@@ -1,9 +1,11 @@
 ﻿
 namespace InventoryAnalytics.Application.Repositories
 {
-    using InventoryAnalytics.Domain.Entities.Csv;
+    
+    using InventoryAnalytics.Domain.Entities.Db;
+
     public interface IInventoryRepository
     {
-        Task<IEnumerable<InventarioDiario>> GetInventoryDataAsync();
+        Task<IEnumerable<Inventory>> GetInventoryDataAsync();
     }
 }
