@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\Dwh\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\InventoryAnalytics.Application\InventoryAnalytics.Application.csproj" />
     <ProjectReference Include="..\InventoryAnalytics.Domain\InventoryAnalytics.Domain.csproj" />
   </ItemGroup>
