@@ -1,8 +1,4 @@
-﻿
-
-
-
-namespace InventoryAnalytics.Application.Interfaces
+﻿namespace InventoryAnalytics.Application.Interfaces
 {
     using InventoryAnalytics.Application.Result;
     public interface IInventoryHandlerService

@@ -19,12 +19,22 @@ namespace InventoryAnalytics.Application.Services
             this.csvInventoryFileRepository = csvInventoryFileRepository;
         }
         /// <summary>
-        ///     Processes inventory data asynchronously.
+        ///   Processes inventory data asynchronously.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<ServiceResult> ProcessInventoryDataAsync()
+        public async Task<ServiceResult> ProcessInventoryDataAsync()
         {
+
+            // Extraer la data
+            var inventardiario = await this.csvInventoryFileRepository
+                                           .ReadFileAsync(@"D:\\ITLA\\Materias\\Big Data\\datos inventarios");
+
+            var suplliers = await this.supplierApiRepository.GetSuppliersAsync();
+
+
+            // procesar para dwh //
+
             throw new NotImplementedException();
         }
     }

@@ -6,11 +6,20 @@ namespace InventoryAnalytics.Persistence.Repositories.Db
 {
     using InventoryAnalytics.Application.Repositories;
     using InventoryAnalytics.Domain.Entities.Db;
+    using InventoryAnalytics.Persistence.Repositories.Db.Context;
+    using Microsoft.EntityFrameworkCore;
+
     public class InventoryRepository : IInventoryRepository
     {
-        public Task<IEnumerable<Inventory>> GetInventoryDataAsync()
+        private readonly StockContext context;
+
+        public InventoryRepository(StockContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
+        }
+        public async Task<IEnumerable<Inventory>> GetInventoryDataAsync()
+        {
+            return await this.context.Inventories.ToListAsync();
         }
     }
 }
