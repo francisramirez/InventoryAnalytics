@@ -15,7 +15,12 @@ namespace InventoryAnalytics.Api.Data.Repository
         }
         public async Task<IEnumerable<ViewSupplier>> GetAllSuppliersAsync()
         {
-            return await this.context.ViewSuppliers.ToArrayAsync();
+            return await this.context.Suppliers.ToArrayAsync();
+        }
+
+        public async Task<IEnumerable<ViewSupplierCategory>> GetAllSuppliersCategoriesAsync()
+        {
+            return await this.context.SupplierCategorys.ToArrayAsync();
         }
     }
 }

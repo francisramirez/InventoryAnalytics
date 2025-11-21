@@ -1,6 +1,7 @@
 ﻿
 namespace InventoryAnalytics.Application.Services
 {
+    using InventoryAnalytics.Application.Dtos.Apis;
     using InventoryAnalytics.Application.Interfaces;
     using InventoryAnalytics.Application.Repositories;
     using InventoryAnalytics.Application.Result;
@@ -9,14 +10,17 @@ namespace InventoryAnalytics.Application.Services
         private readonly IInventoryRepository inventoryRepository;
         private readonly ISupplierApiRepository supplierApiRepository;
         private readonly ICsvInventoryFileReaderRepository csvInventoryFileRepository;
+        private readonly IDwhRepository dwhRepository;
 
         public InventoryHandlerService(IInventoryRepository inventoryRepository, 
                                        ISupplierApiRepository supplierApiRepository,
-                                       ICsvInventoryFileReaderRepository csvInventoryFileRepository) 
+                                       ICsvInventoryFileReaderRepository csvInventoryFileRepository,
+                                       IDwhRepository dwhRepository) 
         {
             this.inventoryRepository = inventoryRepository;
             this.supplierApiRepository = supplierApiRepository;
             this.csvInventoryFileRepository = csvInventoryFileRepository;
+            this.dwhRepository = dwhRepository;
         }
         /// <summary>
         ///   Processes inventory data asynchronously.
@@ -34,6 +38,18 @@ namespace InventoryAnalytics.Application.Services
 
 
             // procesar para dwh //
+
+            DimDtos dimDtos = new DimDtos();
+
+            dimDtos.Inventories = inventardiario;
+            dimDtos.SupplierCategoryDtos = suplliers;
+            var result this.dwhRepository.LoadDimsData(dimDtos);
+
+            if (result.Success)
+            {
+                this.dwhRepository.loadfacts();
+            }
+
 
             throw new NotImplementedException();
         }

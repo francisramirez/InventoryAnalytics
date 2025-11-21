@@ -9,7 +9,8 @@ namespace InventoryAnalytics.Api.Data.Context
         {
             
         }
-        public DbSet<ViewSupplier> ViewSuppliers { get; set; }
+        public DbSet<ViewSupplier> Suppliers { get; set; }
+        public DbSet<ViewSupplierCategory> SupplierCategorys { get; set; }
 
     }
 }

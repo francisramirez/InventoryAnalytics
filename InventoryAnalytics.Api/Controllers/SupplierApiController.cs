@@ -20,5 +20,11 @@ namespace InventoryAnalytics.Api.Controllers
             var suppliers = await this.supplierRepository.GetAllSuppliersAsync();
             return Ok(suppliers);
         }
+        [HttpGet("GetAllSuppliersCategories")]
+        public async Task<IActionResult> GetAllSuppliersCategories()
+        {
+            var suppliers = await this.supplierRepository.GetAllSuppliersCategoriesAsync();
+            return Ok(suppliers);
+        }
     }
 }

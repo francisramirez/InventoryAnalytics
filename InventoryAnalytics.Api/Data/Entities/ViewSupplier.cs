@@ -10,6 +10,6 @@ namespace InventoryAnalytics.Api.Data.Entities
         [Key]
         public int SupplierId { get; set; }
 
-        public string SupplierName { get; set; }
+        public string? SupplierName { get; set; }
     }
 }

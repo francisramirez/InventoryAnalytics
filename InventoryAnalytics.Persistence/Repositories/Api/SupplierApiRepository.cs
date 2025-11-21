@@ -34,6 +34,8 @@ namespace InventoryAnalytics.Persistence.Repositories.Api
 
             try
             {
+            
+
                 using var client = _clientFactory.CreateClient("SupplierApiClient");
                 client.BaseAddress = new Uri(baseUrl);
 

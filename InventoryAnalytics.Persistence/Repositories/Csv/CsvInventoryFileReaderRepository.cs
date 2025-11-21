@@ -33,6 +33,7 @@ namespace InventoryAnalytics.Persistence.Repositories.Csv
 
             try
             {
+                
                 using var reader = new StreamReader(filePath);
                 using var csv = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture);
                
