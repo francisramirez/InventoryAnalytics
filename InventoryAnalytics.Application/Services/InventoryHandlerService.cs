@@ -7,20 +7,20 @@ namespace InventoryAnalytics.Application.Services
     using InventoryAnalytics.Application.Result;
     public class InventoryHandlerService : IInventoryHandlerService
     {
-        private readonly IInventoryRepository inventoryRepository;
-        private readonly ISupplierApiRepository supplierApiRepository;
-        private readonly ICsvInventoryFileReaderRepository csvInventoryFileRepository;
-        private readonly IDwhRepository dwhRepository;
+        //private readonly IInventoryRepository inventoryRepository;
+        //private readonly ISupplierApiRepository supplierApiRepository;
+        //private readonly ICsvInventoryFileReaderRepository csvInventoryFileRepository;
+        //IInventoryRepository inventoryRepository,
+        //                               ISupplierApiRepository supplierApiRepository,
+        //                               ICsvInventoryFileReaderRepository csvInventoryFileRepository,
+        private readonly IDwhRepository _dwhRepository;
 
-        public InventoryHandlerService(IInventoryRepository inventoryRepository, 
-                                       ISupplierApiRepository supplierApiRepository,
-                                       ICsvInventoryFileReaderRepository csvInventoryFileRepository,
-                                       IDwhRepository dwhRepository) 
+        public InventoryHandlerService(IDwhRepository dwhRepository) 
         {
-            this.inventoryRepository = inventoryRepository;
-            this.supplierApiRepository = supplierApiRepository;
-            this.csvInventoryFileRepository = csvInventoryFileRepository;
-            this.dwhRepository = dwhRepository;
+            //this.inventoryRepository = inventoryRepository;
+            //this.supplierApiRepository = supplierApiRepository;
+            //this.csvInventoryFileRepository = csvInventoryFileRepository;
+            _dwhRepository = dwhRepository;
         }
         /// <summary>
         ///   Processes inventory data asynchronously.
@@ -30,20 +30,26 @@ namespace InventoryAnalytics.Application.Services
         public async Task<ServiceResult> ProcessInventoryDataAsync()
         {
 
-            // Extraer la data
-            var inventardiario = await this.csvInventoryFileRepository
-                                           .ReadFileAsync(@"D:\\ITLA\\Materias\\Big Data\\datos inventarios");
+            //// Extraer la data
+            //var inventardiario = await this.csvInventoryFileRepository
+            //                               .ReadFileAsync(@"D:\\ITLA\\Materias\\Big Data\\datos inventarios");
 
-            var suplliers = await this.supplierApiRepository.GetSuppliersAsync();
+            //var suplliers = await this.supplierApiRepository.GetSuppliersAsync();
 
 
-            // procesar para dwh //
+            //// procesar para dwh //
 
-            //DimDtos dimDtos = new DimDtos();
+            DimDtos dimDtos = new DimDtos();
 
-           // dimDtos.Inventories = inventardiario;
-          //  dimDtos.SupplierCategoryDtos = suplliers;
-            //var result this.dwhRepository.LoadDimsData(dimDtos);
+            dimDtos.fileDataInventory = @"D:\\ITLA\\Materias\\Big Data\\datos inventarios\\Inventario_Diario.csv";
+
+            var result = await _dwhRepository.LoadDimsDataAsync(dimDtos);
+
+
+
+
+            // dimDtos.Inventories = inventardiario;
+            //  dimDtos.SupplierCategoryDtos = suplliers;
 
             //if (result.Success)
             //{

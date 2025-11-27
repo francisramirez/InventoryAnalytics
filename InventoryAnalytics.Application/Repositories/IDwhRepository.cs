@@ -7,6 +7,6 @@ namespace InventoryAnalytics.Application.Repositories
 {
     public interface IDwhRepository
     {
-        Task<ServiceResult> LoadDimsData(DimDtos dimDtos);
+        Task<ServiceResult> LoadDimsDataAsync(DimDtos dimDtos);
     }
 }
