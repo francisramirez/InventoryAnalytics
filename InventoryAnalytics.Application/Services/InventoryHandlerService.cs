@@ -39,16 +39,16 @@ namespace InventoryAnalytics.Application.Services
 
             // procesar para dwh //
 
-            DimDtos dimDtos = new DimDtos();
+            //DimDtos dimDtos = new DimDtos();
 
-            dimDtos.Inventories = inventardiario;
-            dimDtos.SupplierCategoryDtos = suplliers;
-            var result this.dwhRepository.LoadDimsData(dimDtos);
+           // dimDtos.Inventories = inventardiario;
+          //  dimDtos.SupplierCategoryDtos = suplliers;
+            //var result this.dwhRepository.LoadDimsData(dimDtos);
 
-            if (result.Success)
-            {
-                this.dwhRepository.loadfacts();
-            }
+            //if (result.Success)
+            //{
+            //    this.dwhRepository.loadfacts();
+            //}
 
 
             throw new NotImplementedException();
