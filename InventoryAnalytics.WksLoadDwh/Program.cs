@@ -14,16 +14,19 @@ namespace InventoryAnalytics.WksLoadDwh
         {
             var builder = Host.CreateApplicationBuilder(args);
 
-            builder.Services.AddHostedService<Worker>();
-
+           
             //registrar las dependencias del DwhRepository
 
-            builder.Services.AddDbContextPool<DWHInventoryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DWHInventoryConnString")));
+            builder.Services.AddDbContext<DWHInventoryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DWHInventoryConnString")));
             builder.Services.AddScoped<ICsvInventoryFileReaderRepository, CsvInventoryFileReaderRepository>();
             builder.Services.AddScoped<IDwhRepository, DwhRepository>();
 
             //registrar dependencias de InventoryHandlerService
-            builder.Services.AddTransient<IInventoryHandlerService, InventoryHandlerService>();
+            builder.Services.AddScoped<IInventoryHandlerService, InventoryHandlerService>();
+
+
+            builder.Services.AddHostedService<Worker>();
+
 
             var host = builder.Build();
 

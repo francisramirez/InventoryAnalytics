@@ -5,6 +5,8 @@ namespace InventoryAnalytics.Application.Services
     using InventoryAnalytics.Application.Interfaces;
     using InventoryAnalytics.Application.Repositories;
     using InventoryAnalytics.Application.Result;
+    using Microsoft.Extensions.Configuration;
+
     public class InventoryHandlerService : IInventoryHandlerService
     {
         //private readonly IInventoryRepository inventoryRepository;
@@ -14,13 +16,16 @@ namespace InventoryAnalytics.Application.Services
         //                               ISupplierApiRepository supplierApiRepository,
         //                               ICsvInventoryFileReaderRepository csvInventoryFileRepository,
         private readonly IDwhRepository _dwhRepository;
+        private readonly IConfiguration _configuration;
 
-        public InventoryHandlerService(IDwhRepository dwhRepository) 
+        public InventoryHandlerService(IDwhRepository dwhRepository,
+                                       IConfiguration configuration)
         {
             //this.inventoryRepository = inventoryRepository;
             //this.supplierApiRepository = supplierApiRepository;
             //this.csvInventoryFileRepository = csvInventoryFileRepository;
             _dwhRepository = dwhRepository;
+            _configuration = configuration;
         }
         /// <summary>
         ///   Processes inventory data asynchronously.
@@ -29,35 +34,28 @@ namespace InventoryAnalytics.Application.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<ServiceResult> ProcessInventoryDataAsync()
         {
+            ServiceResult serviceResult = new ServiceResult();
 
-            //// Extraer la data
-            //var inventardiario = await this.csvInventoryFileRepository
-            //                               .ReadFileAsync(@"D:\\ITLA\\Materias\\Big Data\\datos inventarios");
+            try
+            {
+                DimDtos dimDtos = new DimDtos();
 
-            //var suplliers = await this.supplierApiRepository.GetSuppliersAsync();
+                dimDtos.fileDataInventory = _configuration["ConnectionStrings:CsvPathString"];
 
+                serviceResult = await _dwhRepository.LoadDimsDataAsync(dimDtos);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.IsSuccess = false;
 
-            //// procesar para dwh //
+                serviceResult.Message = ex.Message;
 
-            DimDtos dimDtos = new DimDtos();
+                //Loggerar y enviar correo //
 
-            dimDtos.fileDataInventory = @"D:\\ITLA\\Materias\\Big Data\\datos inventarios\\Inventario_Diario.csv";
-
-            var result = await _dwhRepository.LoadDimsDataAsync(dimDtos);
-
-
-
-
-            // dimDtos.Inventories = inventardiario;
-            //  dimDtos.SupplierCategoryDtos = suplliers;
-
-            //if (result.Success)
-            //{
-            //    this.dwhRepository.loadfacts();
-            //}
+            }
+            return serviceResult;
 
 
-            throw new NotImplementedException();
         }
     }
 }

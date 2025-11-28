@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryAnalytics.Domain.Entities.Dwh.Dimensions;
@@ -9,6 +10,7 @@ namespace InventoryAnalytics.Domain.Entities.Dwh.Dimensions;
 public partial class DimAlmacen
 {
 
+    [Key]
     public int AlmacenKey { get; set; }
 
     public string CodigoAlmacen { get; set; }

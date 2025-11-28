@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryAnalytics.Persistence.Repositories.Dwh.Context
 {
-    public class DWHInventoryContext : DbContext
+    public partial class DWHInventoryContext : DbContext
     {
         public DWHInventoryContext(DbContextOptions<DWHInventoryContext> options) : base(options)
         {
 
         }
-        public DbSet<DimProduct> DimProducts { get; set; }
-        public DbSet<DimSupplierCategory> DimSupplierCategories { get; set; }
-        public DbSet<DimInventarioDiario> DimInventarioDiarios { get; set; }
+       /// public DbSet<DimProduct> DimProducts { get; set; }
+      //  public DbSet<DimSupplierCategory> DimSupplierCategories { get; set; }
+       // public DbSet<DimInventarioDiario> DimInventarioDiarios { get; set; }
 
         public DbSet<DimAlmacen> DimAlmacens { get; set; }
 
@@ -28,15 +28,15 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh.Context
 
         public DbSet<DimProveedorEntrega> DimProveedorEntregas { get; set; }
 
-        public DbSet<FactEntregasProveedor> FactEntregasProveedors { get; set; }
+       // public DbSet<FactEntregasProveedor> FactEntregasProveedors { get; set; }
 
-        public DbSet<FactInventarioDiario> FactInventarioDiarios { get; set; }
+        //public DbSet<FactInventarioDiario> FactInventarioDiarios { get; set; }
 
-        public DbSet<FactInventarioHistorico> FactInventarioHistoricos { get; set; }
+        //public DbSet<FactInventarioHistorico> FactInventarioHistoricos { get; set; }
 
-        public DbSet<FactMovimientosStock> FactMovimientosStocks { get; set; }
+        //public DbSet<FactMovimientosStock> FactMovimientosStocks { get; set; }
 
-        public DbSet<FactVenta> FactVentas { get; set; }
+        //public DbSet<FactVenta> FactVentas { get; set; }
 
 
     }

@@ -1,12 +1,14 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace InventoryAnalytics.Domain.Entities.Dwh.Dimensions;
 
 [Table("DimFecha", Schema = "Dimensiones")]
 public partial class DimFecha
 {
+    [Key]
     public int FechaKey { get; set; }
 
     public DateTime Fecha { get; set; }

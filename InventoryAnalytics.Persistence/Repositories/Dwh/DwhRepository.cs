@@ -31,6 +31,17 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh
             try
             {
 
+
+                result = await CleanDimenssionTables();
+
+                if (!result.IsSuccess)
+                {
+                    this._logger.LogError(result.Message);
+                    // Enviar correo //
+                    return result;
+                }
+
+
                 var inventoryData = await _csvInventoryFileReaderRepository.ReadFileAsync(dimDtos.fileDataInventory);
 
 
@@ -45,13 +56,17 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh
                                              }).ToArray();
 
 
-
+              
                 await _dWHInventoryContext.DimCategoria.AddRangeAsync(categories);
+                await _dWHInventoryContext.SaveChangesAsync();
 
 
                 var products = inventoryData.Select(pr => new DimProducto
                 {
                     NombreProducto = pr.NombreProducto.Trim(),
+                    FechaCreacionDw = DateTime.Now,
+                    ProductoIdOrigen = "CSV",
+                    Marca = pr.Categoria,
                     CategoriaKey = categories.FirstOrDefault(ca => ca.NombreCategoria == pr.Categoria.Trim()).CategoriaKey
                 }).ToArray();
 
@@ -66,6 +81,8 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh
                                                             .Select(al => new DimAlmacen
                                                             {
                                                                 CodigoAlmacen = al,
+                                                                NombreAlmacen = al,
+                                                                FechaCreacionDw = DateTime.Now
                                                             }).ToArray();
 
 
@@ -93,7 +110,18 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh
                                                             }).ToArray();
 
 
+
+              
+
                 await _dWHInventoryContext.DimFechas.AddRangeAsync(datafecha);
+
+
+
+                // Carga del fact //
+
+
+
+
 
                 await _dWHInventoryContext.SaveChangesAsync();
             }
@@ -104,6 +132,37 @@ namespace InventoryAnalytics.Persistence.Repositories.Dwh
             }
 
             return result;
+        }
+
+        private async Task<ServiceResult> CleanDimenssionTables()
+        {
+            ServiceResult result = null;
+
+            try
+            {
+                await _dWHInventoryContext.DimProductos.ExecuteDeleteAsync();
+                await _dWHInventoryContext.DimCategoria.ExecuteDeleteAsync();
+                await _dWHInventoryContext.DimAlmacens.ExecuteDeleteAsync();
+                await _dWHInventoryContext.DimFechas.ExecuteDeleteAsync();
+
+
+                _dWHInventoryContext.SaveChangesAsync();
+
+                result = new ServiceResult() { IsSuccess= true, Message="La data de las dimensiones fueron limpiadas."};
+
+            }
+            catch (Exception ex)
+            {
+
+                result = new ServiceResult()
+                {
+                    IsSuccess = false,
+                    Message = $"Error limpiando: {ex.Message}"
+                };
+            }
+
+            return result;
+
         }
     }
 }
